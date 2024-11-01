@@ -1,0 +1,53 @@
+{
+    "name": "rn-blob-util",
+    "version": "0.0.2",
+    "description": "A module provides upload, download, and files access API. Supports file stream read/write for process large files.",
+    "main": "index",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+        "base-64": "0.1.0",
+        "glob": "^10.3.10"
+    },
+    "keywords": [
+        "react-native",
+        "fetch",
+        "blob",
+        "fs",
+        "upload",
+        "file",
+        "download",
+        "filestream",
+        "image header"
+    ],
+    "repository": {
+        "url": "git+https://github.com/tuanduc2904/rn-blob-util.git"
+    },
+    "author": {
+        "name": "RonRadtke",
+        "username": "RonRadtke"
+    },
+    "license": "MIT",
+    "contributors": [
+        "Traviskn <>",
+        "Ben <benhsieh@catchplay.com>",
+        "wkh237 <xeiyan@gmail.com>"
+    ],
+    "devDependencies": {
+        "@typescript-eslint/parser": "^3.4.0",
+        "@react-native-community/eslint-config": "^3.0.0",
+        "eslint-config-defaults": "^9.0.0",
+        "eslint-plugin-react": "^7.24.0",
+        "eslint": ">7.0.0"
+    },
+    "peerDependencies": {
+        "react": "*",
+        "react-native": "*"
+    },
+    "codegenConfig": {
+        "name": "ReactNativeBlobUtilSpec",
+        "type": "modules",
+        "jsSrcsDir": "codegenSpecs"
+    }
+}
