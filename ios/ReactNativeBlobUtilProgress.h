@@ -17,6 +17,13 @@ typedef NS_ENUM(NSUInteger, ProgressType) {
 };
 
 @interface ReactNativeBlobUtilProgress : NSObject
+{
+    NSNumber * count;
+    NSNumber * interval;
+    ProgressType type;
+    BOOL enable;
+    
+}
 
 @property (nonatomic) NSNumber * count;
 @property (nonatomic) NSNumber * interval;

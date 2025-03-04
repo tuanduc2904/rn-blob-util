@@ -79,7 +79,7 @@ public class ReactNativeBlobUtilMediaCollection {
 
     public static Uri createNewMediaFile(FileDescription file, MediaType mt, ReactApplicationContext ctx) {
         // Add a specific media item.
-        Context appCtx = ReactNativeBlobUtilImpl.RCTContext.getApplicationContext();
+        Context appCtx = ReactNativeBlobUtil.RCTContext.getApplicationContext();
         ContentResolver resolver = appCtx.getContentResolver();
 
         ContentValues fileDetails = new ContentValues();
@@ -95,12 +95,8 @@ public class ReactNativeBlobUtilMediaCollection {
 
             Uri mediauri = getMediaUri(mt);
 
-            try {
-                // Keeps a handle to the new file's URI in case we need to modify it later.
-                return resolver.insert(mediauri, fileDetails);
-            } catch (Exception e) {
-                return null;
-            }
+            // Keeps a handle to the new file's URI in case we need to modify it later.
+            return resolver.insert(mediauri, fileDetails);
         } else {
             File f = new File(relativePath + file.getFullPath());
             if (true) {
@@ -128,10 +124,10 @@ public class ReactNativeBlobUtilMediaCollection {
         return null;
     }
 
-    public static boolean writeToMediaFile(Uri fileUri, String data, boolean transformFile, Promise promise, ReactApplicationContext ctx) {
+    public static boolean writeToMediaFile(Uri fileUri, String data, boolean transformFile, Promise promise) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             try {
-                Context appCtx = ctx.getApplicationContext();
+                Context appCtx = ReactNativeBlobUtil.RCTContext.getApplicationContext();
                 ContentResolver resolver = appCtx.getContentResolver();
 
                 // set pending doesn't work right now. We would have to requery for the item
@@ -224,7 +220,7 @@ public class ReactNativeBlobUtilMediaCollection {
     }
 
     public static void copyToInternal(Uri contenturi, String destpath, Promise promise) {
-        Context appCtx = ReactNativeBlobUtilImpl.RCTContext.getApplicationContext();
+        Context appCtx = ReactNativeBlobUtil.RCTContext.getApplicationContext();
         ContentResolver resolver = appCtx.getContentResolver();
 
         InputStream in = null;
@@ -281,7 +277,7 @@ public class ReactNativeBlobUtilMediaCollection {
     }
 
     public static void getBlob(Uri contentUri, String encoding, Promise promise) {
-        Context appCtx = ReactNativeBlobUtilImpl.RCTContext.getApplicationContext();
+        Context appCtx = ReactNativeBlobUtil.RCTContext.getApplicationContext();
         ContentResolver resolver = appCtx.getContentResolver();
         try {
             InputStream in = resolver.openInputStream(contentUri);

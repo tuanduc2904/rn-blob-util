@@ -1,0 +1,1 @@
+For developers who interested in making contribution to this project, please see [https://github.com/joltup/react-native-blob-util-dev](https://github.com/joltup/react-native-blob-util-dev) for more information.

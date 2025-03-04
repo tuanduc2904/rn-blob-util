@@ -1,46 +1,36 @@
 package com.ReactNativeBlobUtil;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 
-import com.facebook.react.TurboReactPackage;
+import com.facebook.react.ReactPackage;
+import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.module.model.ReactModuleInfo;
-import com.facebook.react.module.model.ReactModuleInfoProvider;
+import com.facebook.react.uimanager.ViewManager;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class ReactNativeBlobUtilPackage extends TurboReactPackage {
 
-    @Nullable
+public class ReactNativeBlobUtilPackage implements ReactPackage {
+
+    @NonNull
     @Override
-    public NativeModule getModule(String name, ReactApplicationContext reactContext) {
-        if (name.equals(ReactNativeBlobUtilImpl.NAME)) {
-            return new ReactNativeBlobUtil(reactContext);
-        } else {
-            return null;
-        }
+    public List<NativeModule> createNativeModules(@NonNull ReactApplicationContext reactContext) {
+        List<NativeModule> modules = new ArrayList<>();
+        modules.add(new ReactNativeBlobUtil(reactContext));
+        return modules;
     }
 
+    public List<Class<? extends JavaScriptModule>> createJSModules() {
+        return Collections.emptyList();
+    }
+
+    @NonNull
     @Override
-    public ReactModuleInfoProvider getReactModuleInfoProvider() {
-        return () -> {
-            final Map<String, ReactModuleInfo> moduleInfos = new HashMap<>();
-            boolean isTurboModule = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;
-            moduleInfos.put(
-                    ReactNativeBlobUtilImpl.NAME,
-                    new ReactModuleInfo(
-                            ReactNativeBlobUtilImpl.NAME,
-                            ReactNativeBlobUtilImpl.NAME,
-                            false, // canOverrideExistingModule
-                            false, // needsEagerInit
-                            true, // hasConstants
-                            false, // isCxxModule
-                            isTurboModule // isTurboModule
-                    ));
-            return moduleInfos;
-        };
+    public List<ViewManager> createViewManagers(@NonNull ReactApplicationContext reactContext) {
+        return Collections.emptyList();
     }
 
 }

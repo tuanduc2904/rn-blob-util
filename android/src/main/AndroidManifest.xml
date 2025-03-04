@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.ReactNativeBlobUtil">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.ReactNativeBlobUtil">
 
     <!-- Required to download files from Google Play -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -23,7 +24,8 @@
     <!-- Required to to download files without a notification-->
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION"/>
 
-    <application>
+    <application android:label="@string/app_name">
+
         <provider
             android:name="com.ReactNativeBlobUtil.Utils.FileProvider"
             android:authorities="${applicationId}.provider"

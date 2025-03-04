@@ -55,7 +55,7 @@ public class ReactNativeBlobUtilUtils {
         args.putString("detail", data);
 
         // emit event to js context
-        ReactNativeBlobUtilImpl.RCTContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+        ReactNativeBlobUtil.RCTContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit(ReactNativeBlobUtilConst.EVENT_MESSAGE, args);
     }
 
@@ -125,7 +125,7 @@ public class ReactNativeBlobUtilUtils {
         if (path.startsWith(ReactNativeBlobUtilConst.FILE_PREFIX_BUNDLE_ASSET)) {
             return path;
         } else
-            return PathResolver.getRealPathFromURI(ReactNativeBlobUtilImpl.RCTContext, uri);
+            return PathResolver.getRealPathFromURI(ReactNativeBlobUtil.RCTContext, uri);
     }
 
     public static boolean isAsset(String path) {
