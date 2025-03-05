@@ -477,52 +477,47 @@ public class ReactNativeBlobUtilReq extends BroadcastReceiver implements Runnabl
                 @NonNull
                 @Override
                 public Response intercept(@NonNull Chain chain) throws IOException {
-                                      var oldRequest = chain.request();
-                    var newHeaders =
-                            oldRequest
-                                    .headers()
-                                    .newBuilder()
-                                    .add("Accept-Encoding", "deflate")
-                                    .add("Accept-Encoding", "gzip")
-                                    .build();
+                    Request oldRequest = chain.request();
+                    Headers newHeaders = oldRequest.headers()
+                            .newBuilder()
+                            .add("Accept-Encoding", "deflate")
+                            .add("Accept-Encoding", "gzip")
+                            .build();
 
-                    var newRequest = oldRequest.newBuilder().headers(newHeaders).build();
-
-                    var oldResponse = chain.proceed(newRequest);
+                    Request newRequest = oldRequest.newBuilder().headers(newHeaders).build();
+                    Response oldResponse = chain.proceed(newRequest);
 
                     // Replace the response's request with the original one
-                    var responseBuilder = oldResponse.newBuilder().request(oldRequest);
+                    Response.Builder responseBuilder = oldResponse.newBuilder().request(oldRequest);
 
                     // We might not have a body to decompress
-                    var body = oldResponse.body();
+                    ResponseBody body = oldResponse.body();
                     if (body != null) {
                         BufferedSource source = body.source();
-                        var encodings = oldResponse.headers().values("Content-Encoding");
+                        List<String> encodings = oldResponse.headers().values("Content-Encoding");
                         Collections.reverse(encodings);
-                        for (var encoding : encodings) {
+                        for (String encoding : encodings) {
                             if ("deflate".equalsIgnoreCase(encoding)) {
-                                var inflater = new Inflater(true);
+                                Inflater inflater = new Inflater(true);
                                 source = Okio.buffer(new InflaterSource(source, inflater));
                             }
                         }
 
                         // Strip encoding and length headers as we've already handled them
-                        var strippedHeaders =
-                                oldResponse
-                                        .headers()
-                                        .newBuilder()
-                                        .removeAll("Content-Encoding")
-                                        .removeAll("Content-Length")
-                                        .build();
+                        Headers strippedHeaders = oldResponse.headers()
+                                .newBuilder()
+                                .removeAll("Content-Encoding")
+                                .removeAll("Content-Length")
+                                .build();
                         responseBuilder.headers(strippedHeaders);
-                        var contentType = MediaType.parse("application/json");
+
+                        MediaType contentType = MediaType.parse("application/json");
                         // Construct a new body with an inferred Content-Length
-                        var newBody = ResponseBody.create(contentType, -1L, source);
+                        ResponseBody newBody = ResponseBody.create(contentType, -1L, source);
                         responseBuilder.body(newBody);
                     }
 
                     return responseBuilder.build();
-
                 }
             });
 
